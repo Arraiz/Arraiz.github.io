@@ -9,6 +9,7 @@ Mikel Díez García (arraiz) is a Telecomunications Engineer living in Bilbao Sp
 ### More Information
 
 In this blog I will post all kind of information about things I see or read in my spare or work time.
+
 The most usual things to see here are:
 
 - Security in linux servers or in mobile apps
