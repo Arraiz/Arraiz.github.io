@@ -5,18 +5,18 @@ title: 2019-9-10-Hail-Ghidra
 
 ## Introduction
 
-As a student one of the courses I enjoyed the most was one about understading the deep structure and workflow inside an operating system with the help of [Modern Operating Systems](https://en.wikipedia.org/wiki/Modern_Operating_Systems) book by Andrew Tanenbaum.
+As a student one of the courses I enjoyed the most was one about understanding the deep structure and workflow inside an operating system with the help of [Modern Operating Systems](https://en.wikipedia.org/wiki/Modern_Operating_Systems) book by Andrew Tanenbaum.
 
-The coding part was the most funny for me and my  friends.
-In those coding labs the student tries to reveal hidden information in the different UNIX system **shared resources** like  unix sockets for example.
+The coding part was the most funny for me and my friends.
+In those coding labs the student tries to reveal hidden information in the different UNIX system **shared resources** like unix sockets for example.
 
 Today we will try to analyze one of those programs particularly an exam.
 
 The exam program hides certain information within the Operating System for students to work to reveal that data, if so, the program reveals a number called **secret**, the **more** secrets the **highest** the grade.
 
-Before access the program content first a login is done via the student identification and a password.
+Before access the program first a login is done via the student identification and a password.
 
-In this blog I will try to get inside the examen using simple **reverse engineering**  techniques (buzzword_counter++)
+### In this blog I will try to get inside the examen using simple **reverse engineering**  techniques (buzzword_counter++)
 
 
 (the info showed in this blog was gathered **long time ago**)
@@ -54,7 +54,7 @@ arraiz@mintVM:~/Desktop/ghidra$ readelf monitor -a | grep pas
 
 ```
 
-here we see some declarations to **C functions** in the program, this information here is really helpful when switching to [**IDA**](https://www.hex-rays.com/products/ida/) or **Ghidra** for code analysis.
+Here we see some declarations to **C functions** in the program, this information here is really helpful when switching to [**IDA**](https://www.hex-rays.com/products/ida/) or **Ghidra** for code analysis.
 
 
 
