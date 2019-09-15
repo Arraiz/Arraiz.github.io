@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Hail Ghidra
+title: 2019-9-10-Hail-Ghidra
 ---
 
 ## Introduction
@@ -55,6 +55,7 @@ arraiz@mintVM:~/Desktop/ghidra$ readelf monitor -a | grep pas
 ```
 
 here we see some declarations to **C functions** in the program, this information here is really helpful when switching to [**IDA**](https://www.hex-rays.com/products/ida/) or **Ghidra** for code analysis.
+
 
 
 10 minutes later collecting data about functions definitions and strings reveal some **HARDCODED** strings inside the binary.
