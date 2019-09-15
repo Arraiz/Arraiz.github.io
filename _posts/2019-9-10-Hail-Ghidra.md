@@ -3,8 +3,7 @@ layout: post
 title: Hail Ghidra
 ---
 
-# Introduction
-
+## Introduction
 
 As a student one of the courses I enjoyed the most was one about understading the deep structure and workflow inside an operating system with the help of [Modern Operating Systems](https://en.wikipedia.org/wiki/Modern_Operating_Systems) book by Andrew Tanenbaum.
 
@@ -24,7 +23,7 @@ In this blog I will try to get inside the examen using simple **reverse engineer
 
 (this is not a tutorial of how to decompile or break a binary file)
 
-# Content
+## Content
 
 The binary program that contains the exam:
 
@@ -56,7 +55,6 @@ arraiz@mintVM:~/Desktop/ghidra$ readelf monitor -a | grep pas
 ```
 
 here we see some declarations to **C functions** in the program, this information here is really helpful when switching to [**IDA**](https://www.hex-rays.com/products/ida/) or **Ghidra** for code analysis.
-
 
 
 10 minutes later collecting data about functions definitions and strings reveal some **HARDCODED** strings inside the binary.
@@ -260,7 +258,7 @@ Introduce el codigo de acceso:
 
 In other posts I will try to deconstruct the function that generate the secrets or use the private key to make some *h4ck1ng* or maybe not. 
 
-# Conclusions
+## Conclusions
 
 When writing software that is going to be for public use, it must be taken into account that there are tools and techniques to analyze the code within it and it is not necessary to have high knowledge about software to perform an analysis.
 
