@@ -1,9 +1,11 @@
 ---
 layout: post
-title: 2019-9-10-Hail-Ghidra
+title: Hail-Ghidra
 ---
+## Bypassing the login system on a binary
 
-## Introduction
+### Introduction
+___
 
 As a student one of the courses I enjoyed the most was one about understanding the deep structure and workflow inside an operating system with the help of [Modern Operating Systems](https://en.wikipedia.org/wiki/Modern_Operating_Systems) book by Andrew Tanenbaum.
 
@@ -16,40 +18,37 @@ The exam program hides certain information within the Operating System for stude
 
 Before access the program first a login is done via the student identification and a password.
 
-### In this blog I will try to get inside the examen using simple **reverse engineering**  techniques (buzzword_counter++)
+> In this blog I will try to get inside the exam using simple **reverse engineering**  techniques
+
 
 
 (the info showed in this blog was gathered **long time ago**)
 
 (this is not a tutorial of how to decompile or break a binary file)
 
-## Content
+### Lets dig in to it
+___
 
-The binary program that contains the exam:
+The binary program that contains the exam is called *monitor*:
 
-```shell
-$ file monitor
-
+``` shell
+$ file monitor 
 monitor: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/l, for GNU/Linux 2.6.24, BuildID[sha1]=***68984e4bcc8dbe5a70d81*****8cccd9f82a5, with debug_info, not stripped
 
 ```
 
 The file is a **ELF** (executable) dynamically linked for **64 bit** and for GNU linux using GCC.
 
-**readelf** gives us more information about the file, in this case searching for info like **passwords** or students **identification** numbers (spanish identification card number or DNI)
+*readelf* gives us more information about the file, in this case searching for info like **passwords** or students **identification** numbers (spanish identification card number or DNI)
 
-```
-arraiz@mintVM:~/Desktop/ghidra$ readelf monitor -all | grep DNI
-
-
+``` shell
+$ arraiz@mintVM:~/Desktop/ghidra$ readelf monitor -all | grep DNI
    243: 0000000000401f30    77 FUNC    GLOBAL DEFAULT   13 DNItol
 
 ```
 
-```
-
-arraiz@mintVM:~/Desktop/ghidra$ readelf monitor -a | grep pas
-
+``` shell
+$ arraiz@mintVM:~/Desktop/ghidra$ readelf monitor -a | grep pas
    126: 0000000000402510   209 FUNC    GLOBAL DEFAULT   13 check_passwd
 
 ```
@@ -60,15 +59,16 @@ Here we see some declarations to **C functions** in the program, this informatio
 
 10 minutes later collecting data about functions definitions and strings reveal some **HARDCODED** strings inside the binary.
 
-```
-arraiz@mintVM:~/Desktop/ghidra$ strings monitor
-
+``` shell
+$ arraiz@mintVM:~/Desktop/ghidra$ strings monitor
 14******F
 ....
 ....
+omitted lines
 ....
-10000011E
-10000012E
+....
+100**01*E
+100**01*E
 ```
 
 Holly cows
@@ -79,13 +79,10 @@ There are also some 'testing' identification numbers with fake IDs  for developm
 
 The point here is that the IDs are not even encrypted or hashed.
 
-One way to do not leak the data inside a program is to HASH the IDs.
-
 The last try to get more hardcoded strings in the binary gives **this**. 
 
-```
-arraiz@mintVM:~/Desktop/ghidra$ strings monitor | grep key
-
+``` shell
+$ arraiz@mintVM:~/Desktop/ghidra$ strings monitor | grep key
 -----BEGIN RSA PRIVATE KEY-----
 MIIEowI*********************************************************
 II/UIZAUuRpYigRbjbWI8gb9bF0SWKWOoP9a+fmhdQ7Stkl79i2SsFyzU67zIYHg
@@ -126,9 +123,8 @@ Now time to check if the login still available with the data founded in the bina
 
 The ID numbers are working fine but the program asks for another code, an 'access code'.
 
-```
-arraiz@mintVM:~/Desktop/ghidra$ ./monitor 
-
+``` shell
+$ arraiz@mintVM:~/Desktop/ghidra$ ./monitor 
 Introduce tu DNI (con letra).
 1********
 
@@ -144,7 +140,7 @@ Once **decompiled** (buzzword_counter++) all code inside the binary **Ghidra** g
 
 **Bingo**
 
-```C
+``` C
 int check_passwd(void)
 
 {
@@ -231,7 +227,7 @@ int check_passwd(void)
   __stack_chk_fail();
 }
 ```
-There are some values **'asipwd' , 'asipwd', 'prfasi', 'devasi'** hardcoded inside the C function lets give them a shot...
+There are some values **'asipwd' , 'isapwd', 'prfasi', 'devasi'** hardcoded inside the C function, lets give them a shot...
 ```
 Introduce tu DNI (con letra).
 1********(fake ID founded)
@@ -240,6 +236,7 @@ Introduce el codigo de acceso:
 ******
 
 ...........
+omitted lines
 ...........
 
 1.- EJERCICIO 1: ******
@@ -259,10 +256,11 @@ Introduce el codigo de acceso:
 
 In other posts I will try to deconstruct the function that generate the secrets or use the private key to make some *h4ck1ng* or maybe not. 
 
-## Conclusions
+### Conclusions
+___
 
 When writing software that is going to be for public use, it must be taken into account that there are tools and techniques to analyze the code within it and it is not necessary to have high knowledge about software to perform an analysis.
 
 This blog was intended to demonstrate that with 3 tools (2 of them Linux commands) you can perform a simple analysis of a binary file.
 
-## Regards to jtpfevaa
+### Regards to jtpfevaa
