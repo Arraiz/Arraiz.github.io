@@ -7,7 +7,7 @@ title: Hail-Ghidra
 ### Introduction
 ___
 
-As a student one of the courses I enjoyed the most was one about understanding the deep structure and workflow inside an operating system with the help of [Modern Operating Systems](https://en.wikipedia.org/wiki/Modern_Operating_Systems) book by Andrew Tanenbaum.
+As a student, one of the courses I enjoyed the most was one about understanding the deep structure and workflow inside an operating system with the help of [Modern Operating Systems](https://en.wikipedia.org/wiki/Modern_Operating_Systems) book by Andrew Tanenbaum.
 
 The coding part was the most funny for me and my friends.
 In those coding labs the student tries to reveal hidden information in the different UNIX system **shared resources** like unix sockets for example.
@@ -73,7 +73,7 @@ omitted lines
 
 Holly cows
 
-Those are the **Identification numbers** (+40) of all students remember that those IDs **are the program password** also.
+Those are the **Identification numbers** (+40) of all students, remember that those IDs **are the program password** as well.
 
 There are also some 'testing' identification numbers with fake IDs  for development maybe.
 
