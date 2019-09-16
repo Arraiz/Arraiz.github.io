@@ -140,58 +140,46 @@ Once **decompiled** (buzzword_counter++) all code inside the binary **Ghidra** g
 
 **Bingo**
 
-``` C
-int check_passwd(void)
+```c
+  int check_passwd(void)
 
-{
-  long lVar1;
-  int iVar2;
-  long lVar3;
-  byte *pbVar4;
-  byte *pbVar5;
-  long in_FS_OFFSET;
-  bool bVar6;
-  bool bVar7;
-  bool bVar8;
-  byte bVar9;
-  char buf [256];
-  
-  bVar9 = 0;
-  lVar1 = *(long *)(in_FS_OFFSET + 0x28);
-  bVar6 = false;
-  bVar8 = true;
-  __printf_chk(1,msg_monitor[(long)lang][5]);
-  get_pwd(buf,7);
-  lVar3 = 7;
-  pbVar4 = (byte *)buf;
-  pbVar5 = (byte *)"asipwd";
-  do {
-    if (lVar3 == 0) break;
-    lVar3 = lVar3 + -1;
-    bVar6 = *pbVar4 < *pbVar5;
-    bVar8 = *pbVar4 == *pbVar5;
-    pbVar4 = pbVar4 + (ulong)bVar9 * -2 + 1;
-    pbVar5 = pbVar5 + (ulong)bVar9 * -2 + 1;
-  } while (bVar8);
-  iVar2 = 1;
-  bVar7 = (!bVar6 && !bVar8) < bVar6;
-  bVar6 = (!bVar6 && !bVar8) == bVar6;
-  if (!bVar6) {
+  {
+    long lVar1;
+    int iVar2;
+    long lVar3;
+    byte *pbVar4;
+    byte *pbVar5;
+    long in_FS_OFFSET;
+    bool bVar6;
+    bool bVar7;
+    bool bVar8;
+    byte bVar9;
+    char buf [256];
+    
+    bVar9 = 0;
+    lVar1 = *(long *)(in_FS_OFFSET + 0x28);
+    bVar6 = false;
+    bVar8 = true;
+    __printf_chk(1,msg_monitor[(long)lang][5]);
+    get_pwd(buf,7);
     lVar3 = 7;
     pbVar4 = (byte *)buf;
-    pbVar5 = (byte *)"isapwd";
+    pbVar5 = (byte *)"asipwd";
     do {
       if (lVar3 == 0) break;
       lVar3 = lVar3 + -1;
-      bVar7 = *pbVar4 < *pbVar5;
-      bVar6 = *pbVar4 == *pbVar5;
+      bVar6 = *pbVar4 < *pbVar5;
+      bVar8 = *pbVar4 == *pbVar5;
       pbVar4 = pbVar4 + (ulong)bVar9 * -2 + 1;
       pbVar5 = pbVar5 + (ulong)bVar9 * -2 + 1;
-    } while (bVar6);
+    } while (bVar8);
+    iVar2 = 1;
+    bVar7 = (!bVar6 && !bVar8) < bVar6;
+    bVar6 = (!bVar6 && !bVar8) == bVar6;
     if (!bVar6) {
       lVar3 = 7;
       pbVar4 = (byte *)buf;
-      pbVar5 = (byte *)"prfasi";
+      pbVar5 = (byte *)"isapwd";
       do {
         if (lVar3 == 0) break;
         lVar3 = lVar3 + -1;
@@ -203,7 +191,7 @@ int check_passwd(void)
       if (!bVar6) {
         lVar3 = 7;
         pbVar4 = (byte *)buf;
-        pbVar5 = (byte *)"devasi";
+        pbVar5 = (byte *)"prfasi";
         do {
           if (lVar3 == 0) break;
           lVar3 = lVar3 + -1;
@@ -212,21 +200,34 @@ int check_passwd(void)
           pbVar4 = pbVar4 + (ulong)bVar9 * -2 + 1;
           pbVar5 = pbVar5 + (ulong)bVar9 * -2 + 1;
         } while (bVar6);
-        iVar2 = 0;
-        if ((!bVar7 && !bVar6) == bVar7) {
-          developer = 1;
-          iVar2 = 1;
+        if (!bVar6) {
+          lVar3 = 7;
+          pbVar4 = (byte *)buf;
+          pbVar5 = (byte *)"devasi";
+          do {
+            if (lVar3 == 0) break;
+            lVar3 = lVar3 + -1;
+            bVar7 = *pbVar4 < *pbVar5;
+            bVar6 = *pbVar4 == *pbVar5;
+            pbVar4 = pbVar4 + (ulong)bVar9 * -2 + 1;
+            pbVar5 = pbVar5 + (ulong)bVar9 * -2 + 1;
+          } while (bVar6);
+          iVar2 = 0;
+          if ((!bVar7 && !bVar6) == bVar7) {
+            developer = 1;
+            iVar2 = 1;
+          }
         }
       }
     }
+    if (lVar1 == *(long *)(in_FS_OFFSET + 0x28)) {
+      return iVar2;
+    }
+                      /* WARNING: Subroutine does not return */
+    __stack_chk_fail();
   }
-  if (lVar1 == *(long *)(in_FS_OFFSET + 0x28)) {
-    return iVar2;
-  }
-                    /* WARNING: Subroutine does not return */
-  __stack_chk_fail();
-}
 ```
+
 There are some values **'asipwd' , 'isapwd', 'prfasi', 'devasi'** hardcoded inside the C function, lets give them a shot...
 ```
 Introduce tu DNI (con letra).

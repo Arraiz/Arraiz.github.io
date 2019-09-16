@@ -1,9 +1,9 @@
-I"*<h2 id="bypassing-the-login-system-on-a-binary">Bypassing the login system on a binary</h2>
+I"x-<h2 id="bypassing-the-login-system-on-a-binary">Bypassing the login system on a binary</h2>
 
 <h3 id="introduction">Introduction</h3>
 <hr />
 
-<p>As a student one of the courses I enjoyed the most was one about understanding the deep structure and workflow inside an operating system with the help of <a href="https://en.wikipedia.org/wiki/Modern_Operating_Systems">Modern Operating Systems</a> book by Andrew Tanenbaum.</p>
+<p>As a student, one of the courses I enjoyed the most was one about understanding the deep structure and workflow inside an operating system with the help of <a href="https://en.wikipedia.org/wiki/Modern_Operating_Systems">Modern Operating Systems</a> book by Andrew Tanenbaum.</p>
 
 <p>The coding part was the most funny for me and my friends.
 In those coding labs the student tries to reveal hidden information in the different UNIX system <strong>shared resources</strong> like unix sockets for example.</p>
@@ -22,7 +22,7 @@ In those coding labs the student tries to reveal hidden information in the diffe
 
 <p>(this is not a tutorial of how to decompile or break a binary file)</p>
 
-<h3 id="lets-dig-in-to-it">Lets dig in to it</h3>
+<h3 id="lets-jump-right-into-it">Let’s jump right into it</h3>
 <hr />
 
 <p>The binary program that contains the exam is called <em>monitor</em>:</p>
@@ -36,12 +36,12 @@ monitor: ELF 64-bit LSB executable, x86-64, version 1 <span class="o">(</span>SY
 
 <p><em>readelf</em> gives us more information about the file, in this case searching for info like <strong>passwords</strong> or students <strong>identification</strong> numbers (spanish identification card number or DNI)</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ arraiz@mintVM:~/Desktop/ghidra$ readelf monitor -all | grep DNI
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>arraiz@mintVM:~/Desktop/ghidra<span class="nv">$ </span>readelf monitor <span class="nt">-all</span> | <span class="nb">grep </span>DNI
    243: 0000000000401f30    77 FUNC    GLOBAL DEFAULT   13 DNItol
 
 </code></pre></div></div>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ arraiz@mintVM:~/Desktop/ghidra$ readelf monitor -a | grep pas
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>arraiz@mintVM:~/Desktop/ghidra<span class="nv">$ </span>readelf monitor <span class="nt">-a</span> | <span class="nb">grep </span>pas
    126: 0000000000402510   209 FUNC    GLOBAL DEFAULT   13 check_passwd
 
 </code></pre></div></div>
@@ -50,20 +50,20 @@ monitor: ELF 64-bit LSB executable, x86-64, version 1 <span class="o">(</span>SY
 
 <p>10 minutes later collecting data about functions definitions and strings reveal some <strong>HARDCODED</strong> strings inside the binary.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ arraiz@mintVM:~/Desktop/ghidra$ strings monitor
-14******F
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>arraiz@mintVM:~/Desktop/ghidra<span class="nv">$ </span>strings monitor
+14<span class="k">******</span>F
 ....
 ....
 omitted lines
 ....
 ....
-100**01*E
-100**01*E
+100<span class="k">**</span>01<span class="k">*</span>E
+100<span class="k">**</span>01<span class="k">*</span>E
 </code></pre></div></div>
 
 <p>Holly cows</p>
 
-<p>Those are the <strong>Identification numbers</strong> (+40) of all students remember that those IDs <strong>are the program password</strong> also.</p>
+<p>Those are the <strong>Identification numbers</strong> (+40) of all students, remember that those IDs <strong>are the program password</strong> as well.</p>
 
 <p>There are also some ‘testing’ identification numbers with fake IDs  for development maybe.</p>
 
@@ -71,9 +71,9 @@ omitted lines
 
 <p>The last try to get more hardcoded strings in the binary gives <strong>this</strong>.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>arraiz@mintVM:~/Desktop/ghidra$ strings monitor | grep key
------BEGIN RSA PRIVATE KEY-----
-MIIEowI*********************************************************
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>arraiz@mintVM:~/Desktop/ghidra<span class="nv">$ </span>strings monitor | <span class="nb">grep </span>key
+<span class="nt">-----BEGIN</span> RSA PRIVATE KEY-----
+MIIEowI<span class="k">*********************************************************</span>
 II/UIZAUuRpYigRbjbWI8gb9bF0SWKWOoP9a+fmhdQ7Stkl79i2SsFyzU67zIYHg
 x74ORxr4CU9GE6VnRp6y61nFmR6qTko/fOIFoik5McdkeyW2cezYvVtOafokOhTr
 tl09k2Udi1Kl6+NxA4B+mgvRGJ9KM7IhCNWxOsn4G7W1bWjKYuqTUQ0DaE7b394W
@@ -91,15 +91,15 @@ j59qAZaCfvNzz9Y7N9q1++JI67O03tr8fp4UZGBBIB3+tBW2s1kkd339Kl54lf4S
 Gf00zGPsQKPA1fVYqRI97YYhZbJVM5NQxNSFrv8CgYBRFIizPU5SGEmzbXUqy64G
 ZlCIX8tlJTxiPMIpqUG3t9js4A/pqekOfX40X728gc/dXFuwS73NYwU/hVsDqwLf
 KyzGAD4UUcHrET0f79ihOoOit9aW8DwMygRxR
-***************************
+<span class="k">***************************</span>
 fh3r6N3khOxgDx+TqhUf+wKBgQCr/8T+lU22x63eK/tlxBnkc0BMD0M03BiwC3Ae
-**********************
+<span class="k">**********************</span>
 XTlJ9EsBl4e7kDGYCZmnCDXodmYSD5kKLafaE4+gIosZ9C+kLNggjLzNJ6xFW+2x
 ivlil7xGUZD2AAkRatTraYEGw+Uh6t2TEOFzDTpZrV+li7QLEbJHH/s99i9pdPuy
 dLoyLwKBgD1CFDmKye8SnqfA+BOjLWXpoZ8kfWJc5KhRmxNK3g357iQBmIzz7kRP
 /MisZoI+cArEy7ChlsBhQUTKmi/HWd5kZ6pED3hkkzztU9Rh9SfI7mlUplmZBtvf
 ZvlYkArbn0TUbn4dsKfCtfsqt3ontIshsLcxDdFRGcc87i7xbACJ
------END RSA PRIVATE KEY-----
+<span class="nt">-----END</span> RSA PRIVATE KEY-----
 </code></pre></div></div>
 
 <p>Mother of horses.</p>
@@ -126,57 +126,45 @@ Introduce el codigo de acceso:
 
 <p><strong>Bingo</strong></p>
 
-<pre><code class="language-C">int check_passwd(void)
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  int check_passwd(void)
 
-{
-  long lVar1;
-  int iVar2;
-  long lVar3;
-  byte *pbVar4;
-  byte *pbVar5;
-  long in_FS_OFFSET;
-  bool bVar6;
-  bool bVar7;
-  bool bVar8;
-  byte bVar9;
-  char buf [256];
-  
-  bVar9 = 0;
-  lVar1 = *(long *)(in_FS_OFFSET + 0x28);
-  bVar6 = false;
-  bVar8 = true;
-  __printf_chk(1,msg_monitor[(long)lang][5]);
-  get_pwd(buf,7);
-  lVar3 = 7;
-  pbVar4 = (byte *)buf;
-  pbVar5 = (byte *)"asipwd";
-  do {
-    if (lVar3 == 0) break;
-    lVar3 = lVar3 + -1;
-    bVar6 = *pbVar4 &lt; *pbVar5;
-    bVar8 = *pbVar4 == *pbVar5;
-    pbVar4 = pbVar4 + (ulong)bVar9 * -2 + 1;
-    pbVar5 = pbVar5 + (ulong)bVar9 * -2 + 1;
-  } while (bVar8);
-  iVar2 = 1;
-  bVar7 = (!bVar6 &amp;&amp; !bVar8) &lt; bVar6;
-  bVar6 = (!bVar6 &amp;&amp; !bVar8) == bVar6;
-  if (!bVar6) {
+  {
+    long lVar1;
+    int iVar2;
+    long lVar3;
+    byte *pbVar4;
+    byte *pbVar5;
+    long in_FS_OFFSET;
+    bool bVar6;
+    bool bVar7;
+    bool bVar8;
+    byte bVar9;
+    char buf [256];
+    
+    bVar9 = 0;
+    lVar1 = *(long *)(in_FS_OFFSET + 0x28);
+    bVar6 = false;
+    bVar8 = true;
+    __printf_chk(1,msg_monitor[(long)lang][5]);
+    get_pwd(buf,7);
     lVar3 = 7;
     pbVar4 = (byte *)buf;
-    pbVar5 = (byte *)"isapwd";
+    pbVar5 = (byte *)"asipwd";
     do {
       if (lVar3 == 0) break;
       lVar3 = lVar3 + -1;
-      bVar7 = *pbVar4 &lt; *pbVar5;
-      bVar6 = *pbVar4 == *pbVar5;
+      bVar6 = *pbVar4 &lt; *pbVar5;
+      bVar8 = *pbVar4 == *pbVar5;
       pbVar4 = pbVar4 + (ulong)bVar9 * -2 + 1;
       pbVar5 = pbVar5 + (ulong)bVar9 * -2 + 1;
-    } while (bVar6);
+    } while (bVar8);
+    iVar2 = 1;
+    bVar7 = (!bVar6 &amp;&amp; !bVar8) &lt; bVar6;
+    bVar6 = (!bVar6 &amp;&amp; !bVar8) == bVar6;
     if (!bVar6) {
       lVar3 = 7;
       pbVar4 = (byte *)buf;
-      pbVar5 = (byte *)"prfasi";
+      pbVar5 = (byte *)"isapwd";
       do {
         if (lVar3 == 0) break;
         lVar3 = lVar3 + -1;
@@ -188,7 +176,7 @@ Introduce el codigo de acceso:
       if (!bVar6) {
         lVar3 = 7;
         pbVar4 = (byte *)buf;
-        pbVar5 = (byte *)"devasi";
+        pbVar5 = (byte *)"prfasi";
         do {
           if (lVar3 == 0) break;
           lVar3 = lVar3 + -1;
@@ -197,21 +185,34 @@ Introduce el codigo de acceso:
           pbVar4 = pbVar4 + (ulong)bVar9 * -2 + 1;
           pbVar5 = pbVar5 + (ulong)bVar9 * -2 + 1;
         } while (bVar6);
-        iVar2 = 0;
-        if ((!bVar7 &amp;&amp; !bVar6) == bVar7) {
-          developer = 1;
-          iVar2 = 1;
+        if (!bVar6) {
+          lVar3 = 7;
+          pbVar4 = (byte *)buf;
+          pbVar5 = (byte *)"devasi";
+          do {
+            if (lVar3 == 0) break;
+            lVar3 = lVar3 + -1;
+            bVar7 = *pbVar4 &lt; *pbVar5;
+            bVar6 = *pbVar4 == *pbVar5;
+            pbVar4 = pbVar4 + (ulong)bVar9 * -2 + 1;
+            pbVar5 = pbVar5 + (ulong)bVar9 * -2 + 1;
+          } while (bVar6);
+          iVar2 = 0;
+          if ((!bVar7 &amp;&amp; !bVar6) == bVar7) {
+            developer = 1;
+            iVar2 = 1;
+          }
         }
       }
     }
+    if (lVar1 == *(long *)(in_FS_OFFSET + 0x28)) {
+      return iVar2;
+    }
+                      /* WARNING: Subroutine does not return */
+    __stack_chk_fail();
   }
-  if (lVar1 == *(long *)(in_FS_OFFSET + 0x28)) {
-    return iVar2;
-  }
-                    /* WARNING: Subroutine does not return */
-  __stack_chk_fail();
-}
-</code></pre>
+</code></pre></div></div>
+
 <p>There are some values <strong>‘asipwd’ , ‘isapwd’, ‘prfasi’, ‘devasi’</strong> hardcoded inside the C function, lets give them a shot…</p>
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Introduce tu DNI (con letra).
 1********(fake ID founded)
