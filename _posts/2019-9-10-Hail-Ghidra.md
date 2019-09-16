@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Hail-Ghidra
+title: Hail Ghidra
 ---
 ## Bypassing the login system on a binary
 
