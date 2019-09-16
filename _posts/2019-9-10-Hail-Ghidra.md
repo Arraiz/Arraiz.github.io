@@ -26,7 +26,7 @@ Before access the program first a login is done via the student identification a
 
 (this is not a tutorial of how to decompile or break a binary file)
 
-### Lets dig in to it
+### let's jump right into it
 ___
 
 The binary program that contains the exam is called *monitor*:
