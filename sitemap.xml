@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<url>
+<loc>https://arraiz.github.io/posts/Hail-Ghidra/</loc>
+<lastmod>2019-09-10T09:55:00+02:00</lastmod>
+</url>
+<url>
+<loc>https://arraiz.github.io/categories/</loc>
+<lastmod>2021-02-10T21:07:27+01:00</lastmod>
+</url>
+<url>
+<loc>https://arraiz.github.io/tags/</loc>
+<lastmod>2021-02-10T21:07:27+01:00</lastmod>
+</url>
+<url>
+<loc>https://arraiz.github.io/archives/</loc>
+<lastmod>2021-02-10T21:07:27+01:00</lastmod>
+</url>
+<url>
+<loc>https://arraiz.github.io/about/</loc>
+<lastmod>2021-02-10T21:07:27+01:00</lastmod>
+</url>
+<url>
+<loc>https://arraiz.github.io/</loc>
+</url>
+<url>
+<loc>https://arraiz.github.io/tags/linux/</loc>
+</url>
+<url>
+<loc>https://arraiz.github.io/categories/reverse-enginerring/</loc>
+</url>
+</urlset>
