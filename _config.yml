@@ -23,7 +23,7 @@ description: >- # used by seo meta and the atom feed
   In this blog you will find stuff about Linux, Embedded systems, security and guitars
 
 # fill in the protocol & hostname for your site, e.g., 'https://username.github.io'
-url: ""
+url: "https://arraiz.github.io"
 
 author: arraiz # change to your full name
 
@@ -35,10 +35,10 @@ twitter:
 
 social:
   name: Mikel (arraiz) # it will shows as the copyright owner in Footer
-  #email: mikeldie@doamin.com             # change to your email address
+  email: mikeldiezgarcia@gnail.com # change to your email address
   links:
     # The first element serves as the copyright owner's link
-    - https://twitter.com/arraiz # change to your twitter homepage
+    - https://twitter.com/arraiz0xF # change to your twitter homepage
     - https://github.com/arraiz # change to your github homepage
     # Uncomment below to add more social links
     # - https://www.facebook.com/username
