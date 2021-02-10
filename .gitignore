@@ -1,4 +1,5 @@
 _site
+<<<<<<< HEAD
 .DS_Store
 .jekyll
 .jekyll-metadata
@@ -9,3 +10,9 @@ Gemfile.lock
 node_modules
 package.json
 .vscode
+=======
+.sass-cache
+.jekyll-cache
+.jekyll-metadata
+vendor
+>>>>>>> new_theme

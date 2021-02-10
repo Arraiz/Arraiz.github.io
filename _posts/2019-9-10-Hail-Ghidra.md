@@ -1,4 +1,5 @@
 ---
+<<<<<<< HEAD
 layout: post
 title: Hail Ghidra
 ---
@@ -6,6 +7,22 @@ title: Hail Ghidra
 
 ### Introduction
 ___
+=======
+title: Hail Ghidra
+author: arraiz
+layout: post
+date: 2019-09-10 15:55:00 +0800
+categories: [reverse enginerring]
+tags: [Linux]
+pin: true
+---
+
+## Bypassing the login system on a binary
+
+### Introduction
+
+---
+>>>>>>> new_theme
 
 As a student, one of the courses I enjoyed the most was one about understanding the deep structure and workflow inside an operating system with the help of [Modern Operating Systems](https://en.wikipedia.org/wiki/Modern_Operating_Systems) book by Andrew Tanenbaum.
 
@@ -18,36 +35,60 @@ The exam program hides certain information within the Operating System for stude
 
 Before access the program first a login is done via the student identification and a password.
 
+<<<<<<< HEAD
 > In this blog I will try to get inside the exam using simple **reverse engineering**  techniques
 
 
+=======
+> In this blog I will try to get inside the exam using simple **reverse engineering** techniques
+>>>>>>> new_theme
 
 (the info showed in this blog was gathered **long time ago**)
 
 (this is not a tutorial of how to decompile or break a binary file)
 
 ### Let's jump right into it
+<<<<<<< HEAD
 ___
 
 The binary program that contains the exam is called *monitor*:
 
 ``` shell
 $ file monitor 
+=======
+
+---
+
+The binary program that contains the exam is called _monitor_:
+
+```shell
+$ file monitor
+>>>>>>> new_theme
 monitor: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/l, for GNU/Linux 2.6.24, BuildID[sha1]=***68984e4bcc8dbe5a70d81*****8cccd9f82a5, with debug_info, not stripped
 
 ```
 
 The file is a **ELF** (executable) dynamically linked for **64 bit** and for GNU linux using GCC.
 
+<<<<<<< HEAD
 *readelf* gives us more information about the file, in this case searching for info like **passwords** or students **identification** numbers (spanish identification card number or DNI)
 
 ``` shell
+=======
+_readelf_ gives us more information about the file, in this case searching for info like **passwords** or students **identification** numbers (spanish identification card number or DNI)
+
+```shell
+>>>>>>> new_theme
 $ arraiz@mintVM:~/Desktop/ghidra$ readelf monitor -all | grep DNI
    243: 0000000000401f30    77 FUNC    GLOBAL DEFAULT   13 DNItol
 
 ```
 
+<<<<<<< HEAD
 ``` shell
+=======
+```shell
+>>>>>>> new_theme
 $ arraiz@mintVM:~/Desktop/ghidra$ readelf monitor -a | grep pas
    126: 0000000000402510   209 FUNC    GLOBAL DEFAULT   13 check_passwd
 
@@ -55,11 +96,17 @@ $ arraiz@mintVM:~/Desktop/ghidra$ readelf monitor -a | grep pas
 
 Here we see some declarations to **C functions** in the program, this information here is really helpful when switching to [**IDA**](https://www.hex-rays.com/products/ida/) or **Ghidra** for code analysis.
 
+<<<<<<< HEAD
 
 
 10 minutes later collecting data about functions definitions and strings reveal some **HARDCODED** strings inside the binary.
 
 ``` shell
+=======
+10 minutes later collecting data about functions definitions and strings reveal some **HARDCODED** strings inside the binary.
+
+```shell
+>>>>>>> new_theme
 $ arraiz@mintVM:~/Desktop/ghidra$ strings monitor
 14******F
 ....
@@ -75,6 +122,7 @@ Holly cows
 
 Those are the **Identification numbers** (+40) of all students, remember that those IDs **are the program password** as well.
 
+<<<<<<< HEAD
 There are also some 'testing' identification numbers with fake IDs  for development maybe.
 
 The point here is that the IDs are not even encrypted or hashed.
@@ -82,6 +130,15 @@ The point here is that the IDs are not even encrypted or hashed.
 The last try to get more hardcoded strings in the binary gives **this**. 
 
 ``` shell
+=======
+There are also some 'testing' identification numbers with fake IDs for development maybe.
+
+The point here is that the IDs are not even encrypted or hashed.
+
+The last try to get more hardcoded strings in the binary gives **this**.
+
+```shell
+>>>>>>> new_theme
 $ arraiz@mintVM:~/Desktop/ghidra$ strings monitor | grep key
 -----BEGIN RSA PRIVATE KEY-----
 MIIEowI*********************************************************
@@ -123,8 +180,13 @@ Now time to check if the login still available with the data founded in the bina
 
 The ID numbers are working fine but the program asks for another code, an 'access code'.
 
+<<<<<<< HEAD
 ``` shell
 $ arraiz@mintVM:~/Desktop/ghidra$ ./monitor 
+=======
+```shell
+$ arraiz@mintVM:~/Desktop/ghidra$ ./monitor
+>>>>>>> new_theme
 Introduce tu DNI (con letra).
 1********
 
@@ -136,8 +198,11 @@ No other codes or password were found in the 'string analysis' so is time to tak
 
 Once **decompiled** (buzzword_counter++) all code inside the binary **Ghidra** gives a **C implementation** of the functions inside the binary (some of them discovered in the string analysis), so is time to find some 'access code' o 'pass' functions.
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> new_theme
 **Bingo**
 
 ```c
@@ -155,7 +220,11 @@ Once **decompiled** (buzzword_counter++) all code inside the binary **Ghidra** g
     bool bVar8;
     byte bVar9;
     char buf [256];
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> new_theme
     bVar9 = 0;
     lVar1 = *(long *)(in_FS_OFFSET + 0x28);
     bVar6 = false;
@@ -229,6 +298,10 @@ Once **decompiled** (buzzword_counter++) all code inside the binary **Ghidra** g
 ```
 
 There are some values **'asipwd' , 'isapwd', 'prfasi', 'devasi'** hardcoded inside the C function, lets give them a shot...
+<<<<<<< HEAD
+=======
+
+>>>>>>> new_theme
 ```
 Introduce tu DNI (con letra).
 1********(fake ID founded)
@@ -251,17 +324,33 @@ omitted lines
 
 -------
 ```
+<<<<<<< HEAD
+=======
+
+>>>>>>> new_theme
 **Now we are IN!**
 
 **NOW I CAN LEARN ABOUT IPCs!**
 
+<<<<<<< HEAD
 In other posts I will try to deconstruct the function that generate the secrets or use the private key to make some *h4ck1ng* or maybe not. 
 
 ### Conclusions
 ___
+=======
+In other posts I will try to deconstruct the function that generate the secrets or use the private key to make some _h4ck1ng_ or maybe not.
+
+### Conclusions
+
+---
+>>>>>>> new_theme
 
 When writing software that is going to be for public use, it must be taken into account that there are tools and techniques to analyze the code within it and it is not necessary to have high knowledge about software to perform an analysis.
 
 This blog was intended to demonstrate that with 3 tools (2 of them Linux commands) you can perform a simple analysis of a binary file.
 
+<<<<<<< HEAD
 ### Regards to jtpfevaa
+=======
+### Regards to jtpfevaa
+>>>>>>> new_theme
